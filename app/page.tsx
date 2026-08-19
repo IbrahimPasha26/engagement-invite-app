@@ -1,69 +1,104 @@
-import Image from "next/image";
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { Heart, Calendar, MapPin, Clock } from 'lucide-react';
 
 export default function Home() {
+  // Target engagement date (adjust this to your exact date, 4 months out)
+  const engagementDate = new Date('2026-12-25T18:00:00').getTime();
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = engagementDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [engagementDate]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-gradient-to-b from-rose-950 via-slate-900 to-black text-white flex flex-col items-center justify-between p-6 selection:bg-rose-500 selection:text-white">
+      {/* Top Header / Branding */}
+      <div className="w-full max-w-md text-center pt-8">
+        <span className="text-xs uppercase tracking-[0.3em] text-rose-400 font-medium">
+          You're Invited To The Engagement Of
+        </span>
+      </div>
+
+      {/* Hero Couple Section */}
+      <div className="w-full max-w-md text-center my-auto py-10 space-y-6">
+        <div className="inline-block p-4 rounded-full bg-rose-500/10 border border-rose-500/20 animate-pulse">
+          <Heart className="w-8 h-8 text-rose-400 mx-auto" />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        
+        <h1 className="text-4xl md:text-5xl font-serif tracking-wide text-rose-100">
+          Ibrahim <span className="text-rose-400 font-light">&</span> Partner
+        </h1>
+
+        <p className="text-sm text-slate-300 max-w-xs mx-auto font-light leading-relaxed">
+          Together with our families, we joyfully invite you to celebrate our engagement as we begin our forever.
+        </p>
+
+        {/* Live Countdown Grid */}
+        <div className="grid grid-cols-4 gap-2 pt-6 max-w-xs mx-auto">
+          <div className="bg-white/5 border border-white/10 rounded-xl p-3 backdrop-blur-sm">
+            <span className="block text-2xl font-bold text-rose-300">{timeLeft.days}</span>
+            <span className="text-[10px] uppercase tracking-wider text-slate-400">Days</span>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-3 backdrop-blur-sm">
+            <span className="block text-2xl font-bold text-rose-300">{timeLeft.hours}</span>
+            <span className="text-[10px] uppercase tracking-wider text-slate-400">Hours</span>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-3 backdrop-blur-sm">
+            <span className="block text-2xl font-bold text-rose-300">{timeLeft.minutes}</span>
+            <span className="text-[10px] uppercase tracking-wider text-slate-400">Mins</span>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-xl p-3 backdrop-blur-sm">
+            <span className="block text-2xl font-bold text-rose-300">{timeLeft.seconds}</span>
+            <span className="text-[10px] uppercase tracking-wider text-slate-400">Secs</span>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+
+      {/* Event Details Card */}
+      <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md space-y-4 mb-6 shadow-2xl">
+        <div className="flex items-center space-x-3 text-slate-200">
+          <Calendar className="w-5 h-5 text-rose-400 shrink-0" />
+          <div className="text-sm">
+            <p className="font-medium">Date</p>
+            <p className="text-slate-400 text-xs">December 25, 2026</p>
+          </div>
+        </div>
+        <div className="flex items-center space-x-3 text-slate-200">
+          <Clock className="w-5 h-5 text-rose-400 shrink-0" />
+          <div className="text-sm">
+            <p className="font-medium">Time</p>
+            <p className="text-slate-400 text-xs">6:00 PM Onwards</p>
+          </div>
+        </div>
+        <div className="flex items-center space-x-3 text-slate-200">
+          <MapPin className="w-5 h-5 text-rose-400 shrink-0" />
+          <div className="text-sm">
+            <p className="font-medium">Location</p>
+            <p className="text-slate-400 text-xs">Bangalore, Karnataka</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer copyright / Live status */}
+      <div className="text-center text-[10px] text-slate-500 pb-2">
+        Crafted with love • Live on Vercel
+      </div>
+    </main>
   );
 }
