@@ -3,10 +3,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Heart, Calendar, MapPin, Clock } from 'lucide-react';
 import gsap from 'gsap';
-import RSVPSection from '@/components/RSVPSection';
+import RSVPSection from '../components/RSVPSection';
+import FloatingHearts3D from '../components/FloatingHearts3D';
 
 export default function Home() {
-  // Engagement Date: November 15, 2026, 6:00 PM
   const engagementDate = new Date('2026-11-15T18:00:00').getTime();
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -51,19 +51,18 @@ export default function Home() {
       ref={containerRef}
       className="relative min-h-screen bg-slate-950 text-white flex flex-col items-center justify-between p-6 overflow-hidden selection:bg-rose-500 selection:text-white"
     >
-      {/* Ambient Background Glow (Badge Removed) */}
+      <FloatingHearts3D />
+
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rose-600/30 rounded-full blur-3xl animate-pulse duration-1000" />
       </div>
 
-      {/* Top Header / Branding */}
       <div ref={headerRef} className="w-full max-w-md text-center pt-8 z-10">
         <span className="text-xs uppercase tracking-[0.3em] text-rose-400 font-medium">
           You're Invited To The Engagement Of
         </span>
       </div>
 
-      {/* Hero Couple Section */}
       <div ref={heroRef} className="w-full max-w-md text-center my-auto py-10 space-y-6 z-10">
         <div className="inline-block p-4 rounded-full bg-rose-500/10 border border-rose-500/20 animate-pulse">
           <Heart className="w-8 h-8 text-rose-400 mx-auto" />
@@ -77,7 +76,6 @@ export default function Home() {
           Together with our families, we joyfully invite you to celebrate our engagement as we begin our forever.
         </p>
 
-        {/* Live Countdown Grid */}
         <div ref={countdownRef} className="grid grid-cols-4 gap-2 pt-6 max-w-xs mx-auto">
           <div className="bg-white/5 border border-white/10 rounded-xl p-3 backdrop-blur-sm">
             <span className="block text-2xl font-bold text-rose-300">{timeLeft.days}</span>
@@ -98,7 +96,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Event Details & RSVP Card Container */}
       <div ref={cardRef} className="w-full max-w-md space-y-4 mb-6 z-10">
         <div className="bg-white/5 border border-white/10 rounded-2xl p-5 backdrop-blur-md space-y-4 shadow-2xl">
           <div className="flex items-center space-x-3 text-slate-200">
@@ -124,7 +121,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* RSVP Form Component */}
         <RSVPSection />
       </div>
 
