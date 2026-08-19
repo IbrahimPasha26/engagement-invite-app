@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Heart, Calendar, MapPin, Clock } from 'lucide-react';
+import FloatingHearts3D from '@/components/FloatingHearts3D';
 
 export default function Home() {
   // Target engagement date (adjust this to your exact date, 4 months out)
