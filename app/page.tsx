@@ -9,11 +9,11 @@ export default function Home() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   // Refs for GSAP animation targets
-  const containerRef = useRef(null);
-  const headerRef = useRef(null);
-  const heroRef = useRef(null);
-  const countdownRef = useRef(null);
-  const cardRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const countdownRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Countdown timer interval
@@ -31,23 +31,27 @@ export default function Home() {
       }
     }, 1000);
 
-    // GSAP Entrance Animations
+    // GSAP Entrance Animations with strict null safety checks
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.from(headerRef.current, { y: -30, opacity: 0, duration: 1 })
-        .from(heroRef.current, { y: 30, opacity: 0, duration: 1 }, '-=0.6');
-
-      if (countdownRef.current) {
-        tl.from(countdownRef.current.children, { scale: 0.8, opacity: 0, duration: 0.8, stagger: 0.15 }, '-=0.5');
+      if (headerRef.current) {
+        tl.from(headerRef.current, { y: -30, opacity: 0, duration: 1 });
       }
-
-      tl.from(cardRef.current, { y: 40, opacity: 0, duration: 1 }, '-=0.4');
+      if (heroRef.current) {
+        tl.from(heroRef.current, { y: 30, opacity: 0, duration: 1 }, '-=0.6');
+      }
+      if (countdownRef.current) {
+        tl.from(countdownRef.current, { scale: 0.9, opacity: 0, duration: 0.8 }, '-=0.5');
+      }
+      if (cardRef.current) {
+        tl.from(cardRef.current, { y: 40, opacity: 0, duration: 1 }, '-=0.4');
+      }
     }, containerRef);
 
     return () => {
       clearInterval(timer);
-      ctx.revert(); // Cleanup animations on unmount
+      ctx.revert();
     };
   }, [engagementDate]);
 
