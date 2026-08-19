@@ -36,9 +36,13 @@ export default function Home() {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       tl.from(headerRef.current, { y: -30, opacity: 0, duration: 1 })
-        .from(heroRef.current, { y: 30, opacity: 0, duration: 1 }, '-=0.6')
-        .from(countdownRef.current.children, { scale: 0.8, opacity: 0, duration: 0.8, stagger: 0.15 }, '-=0.5')
-        .from(cardRef.current, { y: 40, opacity: 0, duration: 1 }, '-=0.4');
+        .from(heroRef.current, { y: 30, opacity: 0, duration: 1 }, '-=0.6');
+
+      if (countdownRef.current) {
+        tl.from(countdownRef.current.children, { scale: 0.8, opacity: 0, duration: 0.8, stagger: 0.15 }, '-=0.5');
+      }
+
+      tl.from(cardRef.current, { y: 40, opacity: 0, duration: 1 }, '-=0.4');
     }, containerRef);
 
     return () => {
