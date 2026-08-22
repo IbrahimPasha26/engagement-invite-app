@@ -201,11 +201,13 @@ export default function Home() {
         setWishText('');
         setTimeout(() => setWishSubmitted(false), 5000);
       } else {
-        throw new Error('Failed to submit message.');
+        const errorData = await response.json();
+        console.error("Backend Error:", errorData);
+        setErrorMessage(errorData.error || 'Failed to submit message.');
       }
     } catch (err) {
       console.error("Error saving wish:", err);
-      setErrorMessage('Unable to submit your wish at this time. Please try again.');
+      setErrorMessage('Unable to submit your wish at this time. Please check your connection.');
     } finally {
       setIsSubmittingWish(false);
     }

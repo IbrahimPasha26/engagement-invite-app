@@ -17,18 +17,30 @@ export default function RSVPSection() {
 
     setIsSubmitting(true);
     try {
+      // Map frontend state to exact Mongoose schema enum values
+      const attendanceStatus = attending === 'yes'
+        ? 'Joyfully Accepts'
+        : 'Regretfully Declines';
+
       const response = await fetch('/api/rsvp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), attending, guests: parseInt(guests) })
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          attendance: attendanceStatus, // Matches backend expected key
+          guestsCount: parseInt(guests) // Matches backend expected key
+        })
       });
 
-      if (response.ok || true) {
+      // Removed '|| true' so it only confirms on actual success
+      if (response.ok) {
         setSubmitted(true);
+      } else {
+        console.error("Failed to submit RSVP");
       }
     } catch (err) {
       console.error("RSVP submission error:", err);
-      setSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
