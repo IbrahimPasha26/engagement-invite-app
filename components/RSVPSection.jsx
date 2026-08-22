@@ -17,7 +17,6 @@ export default function RSVPSection() {
 
     setIsSubmitting(true);
     try {
-      // Map frontend state to exact Mongoose schema enum values
       const attendanceStatus = attending === 'yes'
         ? 'Joyfully Accepts'
         : 'Regretfully Declines';
@@ -28,19 +27,21 @@ export default function RSVPSection() {
         body: JSON.stringify({
           name: name.trim(),
           email: email.trim(),
-          attendance: attendanceStatus, // Matches backend expected key
-          guestsCount: parseInt(guests) // Matches backend expected key
+          attendance: attendanceStatus,
+          guestsCount: parseInt(guests)
         })
       });
 
-      // Removed '|| true' so it only confirms on actual success
       if (response.ok) {
         setSubmitted(true);
       } else {
-        console.error("Failed to submit RSVP");
+        const errorData = await response.json();
+        console.error("Backend Error:", errorData);
+        alert(`Failed to save: ${errorData.error || 'Unknown error. Check the console.'}`);
       }
     } catch (err) {
       console.error("RSVP submission error:", err);
+      alert("A network error occurred while submitting. Please check your connection.");
     } finally {
       setIsSubmitting(false);
     }
@@ -48,7 +49,6 @@ export default function RSVPSection() {
 
   return (
     <div className="relative bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-rose-950/20 border border-rose-500/30 rounded-3xl p-6 md:p-8 backdrop-blur-2xl shadow-2xl overflow-hidden transition-all duration-500">
-      {/* Luxurious Ambient Background Glows */}
       <div className="absolute top-0 right-0 w-48 h-48 bg-rose-500/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -77,36 +77,35 @@ export default function RSVPSection() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="relative z-10 space-y-4">
-          {/* Name Field */}
           <div className="space-y-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5">
+            <label htmlFor="rsvpName" className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5 cursor-pointer">
               <User className="w-3.5 h-3.5 text-rose-400" /> Your Full Name *
             </label>
             <input
+              id="rsvpName"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Ibrahim Pasha"
-              className="w-full px-4 py-3 rounded-2xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:bg-slate-900 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
               required
             />
           </div>
 
-          {/* Email Field */}
           <div className="space-y-1.5">
-            <label className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5">
+            <label htmlFor="rsvpEmail" className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5 cursor-pointer">
               <Mail className="w-3.5 h-3.5 text-rose-400" /> Email Address (Optional)
             </label>
             <input
+              id="rsvpEmail"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e.g. ibrahim@example.com"
-              className="w-full px-4 py-3 rounded-2xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
+              className="w-full px-4 py-3 rounded-2xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:bg-slate-900 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
             />
           </div>
 
-          {/* Attendance Choice Buttons with High-End Active States */}
           <div className="space-y-1.5">
             <label className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5">
               <Heart className="w-3.5 h-3.5 text-rose-400" /> Will you attend? *
@@ -140,16 +139,16 @@ export default function RSVPSection() {
             </div>
           </div>
 
-          {/* Guest Count Selector */}
           {attending === 'yes' && (
             <div className="space-y-1.5 animate-fadeIn">
-              <label className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5">
+              <label htmlFor="rsvpGuests" className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5 cursor-pointer">
                 <Users className="w-3.5 h-3.5 text-rose-400" /> Total Number of Attendees
               </label>
               <select
+                id="rsvpGuests"
                 value={guests}
                 onChange={(e) => setGuests(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-slate-950/90 border border-rose-500/30 text-xs text-white focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
+                className="w-full px-4 py-3 rounded-2xl bg-slate-950/90 border border-rose-500/30 text-xs text-white focus:outline-none focus:border-rose-400 focus:bg-slate-900 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
               >
                 <option value="1">1 Guest (Just Me)</option>
                 <option value="2">2 Guests (Plus One / Family)</option>
@@ -159,7 +158,6 @@ export default function RSVPSection() {
             </div>
           )}
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting || !attending}

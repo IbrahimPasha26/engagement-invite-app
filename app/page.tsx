@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
 import {
   Heart, Calendar, MapPin, Clock, Sparkles,
-  Send, Compass, Copy, Check, MessageCircle
+  Send, Compass, Copy, Check, MessageCircle, PenTool, User
 } from 'lucide-react';
 import RSVPSection from '../components/RSVPSection';
 
@@ -16,7 +16,6 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState('details');
 
-  // Wishes Submission State
   const [wishName, setWishName] = useState('');
   const [wishText, setWishText] = useState('');
   const [isSubmittingWish, setIsSubmittingWish] = useState(false);
@@ -77,15 +76,7 @@ export default function Home() {
       hue: Math.random() * 30 + 340
     }));
 
-    const drawHeart = (
-      context: CanvasRenderingContext2D,
-      x: number,
-      y: number,
-      size: number,
-      color: string,
-      opacity: number,
-      angle: number
-    ) => {
+    const drawHeart = (context: CanvasRenderingContext2D, x: number, y: number, size: number, color: string, opacity: number, angle: number) => {
       context.save();
       context.translate(x, y);
       context.rotate(angle);
@@ -103,15 +94,7 @@ export default function Home() {
       context.restore();
     };
 
-    const drawPetal = (
-      context: CanvasRenderingContext2D,
-      x: number,
-      y: number,
-      size: number,
-      color: string,
-      opacity: number,
-      angle: number
-    ) => {
+    const drawPetal = (context: CanvasRenderingContext2D, x: number, y: number, size: number, color: string, opacity: number, angle: number) => {
       context.save();
       context.translate(x, y);
       context.rotate(angle);
@@ -215,20 +198,15 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-slate-950 via-zinc-950 to-rose-950/40 text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-rose-500 selection:text-white">
-      {/* Interactive Floating Hearts Canvas */}
       <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0 opacity-70" />
 
-      {/* Ambient Lighting Background Gradients */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36rem] h-[36rem] bg-rose-600/15 rounded-full blur-[140px] animate-pulse duration-1000" />
         <div className="absolute top-2/3 -left-20 w-80 h-80 bg-amber-500/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-10 -right-20 w-96 h-96 bg-rose-500/10 rounded-full blur-[130px]" />
       </div>
 
-      {/* Main Container */}
       <main className="relative z-10 max-w-md mx-auto px-4 pt-8 pb-24 space-y-6">
-
-        {/* Centered Top Header & Branding Section */}
         <header className="flex flex-col items-center justify-center text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <div className="w-7 h-7 rounded-full bg-rose-500/20 border border-rose-500/30 flex items-center justify-center font-serif text-rose-300 font-semibold text-xs shadow-inner">
@@ -260,11 +238,9 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Hero & Names Section */}
         <section className="text-center space-y-5 bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-rose-950/30 border border-amber-500/30 rounded-3xl p-6 md:p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
-          {/* Bismillah Frame */}
           <div className="relative border border-amber-500/40 rounded-2xl p-4 bg-gradient-to-b from-slate-950/80 via-slate-900/90 to-slate-950/80 shadow-inner space-y-2">
             <p className="font-serif text-amber-100 text-lg sm:text-xl tracking-wider pt-1 drop-shadow">
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
@@ -312,7 +288,6 @@ export default function Home() {
             We cordially invite you and your family to grace our engagement ceremony with your presence and duas.
           </p>
 
-          {/* Countdown Block */}
           <div className="pt-4 space-y-2.5">
             <p className="text-[10px] uppercase tracking-[0.2em] text-rose-300 font-medium">
               Countdown To Celebration
@@ -346,7 +321,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Tab Navigation */}
         <section className="grid grid-cols-2 gap-2 p-1.5 bg-slate-900/80 border border-rose-500/30 rounded-full backdrop-blur-xl shadow-xl">
           <button
             onClick={() => setActiveTab('details')}
@@ -357,7 +331,7 @@ export default function Home() {
             }`}
           >
             <Calendar className={`w-3.5 h-3.5 shrink-0 ${activeTab === 'details' ? 'text-amber-300' : 'text-slate-400'}`} />
-            <span className="truncate">Event Information</span>
+            <span className="truncate">Event Info</span>
           </button>
 
           <button
@@ -373,10 +347,13 @@ export default function Home() {
           </button>
         </section>
 
-        {/* Tab 1: Event Details */}
-        {activeTab === 'details' && (
-          <section className="space-y-4 transition-all duration-500">
-            <div className="bg-slate-900/80 border border-rose-500/30 rounded-3xl p-5 md:p-6 backdrop-blur-2xl space-y-4 shadow-2xl">
+        {/*
+          NEW: Single persistent container for the tabs.
+          This stops the entire page below it (the RSVP component) from jumping up and down when you switch tabs!
+        */}
+        <section className="bg-slate-900/80 border border-rose-500/30 rounded-3xl p-5 md:p-6 backdrop-blur-2xl shadow-2xl min-h-[400px] flex flex-col relative overflow-hidden transition-all duration-500">
+          {activeTab === 'details' && (
+            <div className="space-y-4 animate-fade-in flex-1 flex flex-col justify-center">
               <div className="grid gap-3 text-slate-200">
                 <div className="flex items-center space-x-3.5 p-3.5 rounded-2xl bg-white/5 border border-white/10 shadow-inner">
                   <div className="p-2.5 rounded-xl bg-rose-500/20 border border-rose-500/30 text-rose-300 shrink-0">
@@ -398,7 +375,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Venue Card */}
                 <div className="p-4 rounded-2xl bg-gradient-to-r from-rose-950/40 via-slate-900 to-slate-900 border border-rose-500/30 space-y-3 shadow-lg">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start space-x-3 text-slate-200">
@@ -420,7 +396,7 @@ export default function Home() {
                       className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white text-xs font-medium transition-all shadow-md shadow-rose-950/50"
                     >
                       <Compass className="w-3.5 h-3.5" />
-                      Open Google Maps
+                      Google Maps
                     </a>
                     <button
                       onClick={copyAddress}
@@ -433,8 +409,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Add to Calendar */}
-              <div className="pt-2">
+              <div className="pt-2 mt-auto">
                 <a
                   href={generateGoogleCalendarUrl()}
                   target="_blank"
@@ -446,50 +421,63 @@ export default function Home() {
                 </a>
               </div>
             </div>
-          </section>
-        )}
+          )}
 
-        {/* Tab 2: Send Wishes */}
-        {activeTab === 'wishes' && (
-          <section className="space-y-4 transition-all duration-500">
-            <div className="bg-slate-900/80 border border-rose-500/30 rounded-3xl p-5 md:p-6 backdrop-blur-2xl space-y-4 shadow-2xl">
-              <p className="text-xs text-slate-200 leading-relaxed font-light">
+          {activeTab === 'wishes' && (
+            <div className="space-y-4 animate-fade-in flex-1 flex flex-col justify-center">
+              <p className="text-xs text-slate-200 leading-relaxed font-light mb-2">
                 Please leave your heartfelt duas and messages for us to cherish.
               </p>
 
               {wishSubmitted ? (
-                <div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-center space-y-1 shadow-lg">
+                <div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-center space-y-1 shadow-lg my-auto">
                   <Check className="w-6 h-6 text-emerald-400 mx-auto" />
                   <p className="text-xs font-medium text-emerald-200">Jazakallah Khair for your warm duas!</p>
                   <p className="text-[10px] text-slate-300">Your message has been received with gratitude.</p>
                 </div>
               ) : (
-                <form onSubmit={handleWishSubmit} className="space-y-3">
+                <form onSubmit={handleWishSubmit} className="space-y-4">
                   {errorMessage && (
                     <div className="p-2.5 rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs text-center">
                       {errorMessage}
                     </div>
                   )}
-                  <input
-                    type="text"
-                    placeholder="Your Full Name"
-                    value={wishName}
-                    onChange={(e) => setWishName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
-                    required
-                  />
-                  <textarea
-                    placeholder="Write your personal duas or blessings..."
-                    value={wishText}
-                    onChange={(e) => setWishText(e.target.value)}
-                    rows={3}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner resize-none"
-                    required
-                  />
+
+                  {/* NEW: Accessible Labels and Focus States for the Wishes form */}
+                  <div className="space-y-1.5">
+                    <label htmlFor="wishName" className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5 cursor-pointer">
+                      <User className="w-3.5 h-3.5 text-rose-400" /> Your Name *
+                    </label>
+                    <input
+                      id="wishName"
+                      type="text"
+                      placeholder="e.g. Ibrahim Pasha"
+                      value={wishName}
+                      onChange={(e) => setWishName(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:bg-slate-900 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label htmlFor="wishText" className="text-[11px] uppercase tracking-wider text-rose-300/90 font-medium flex items-center gap-1.5 cursor-pointer">
+                      <PenTool className="w-3.5 h-3.5 text-rose-400" /> Your Duas / Message *
+                    </label>
+                    <textarea
+                      id="wishText"
+                      placeholder="Write your personal duas or blessings..."
+                      value={wishText}
+                      onChange={(e) => setWishText(e.target.value)}
+                      rows={3}
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/90 border border-rose-500/30 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-400 focus:bg-slate-900 focus:ring-2 focus:ring-rose-500/30 transition-all shadow-inner resize-none"
+                      required
+                    />
+                  </div>
+
                   <button
                     type="submit"
                     disabled={isSubmittingWish}
-                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white text-xs font-semibold uppercase tracking-wider transition-all shadow-xl shadow-rose-950/50 flex items-center justify-center gap-1.5 disabled:opacity-50"
+                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-400 text-white text-xs font-semibold uppercase tracking-wider transition-all shadow-xl shadow-rose-950/50 flex items-center justify-center gap-1.5 disabled:opacity-50 mt-auto"
                   >
                     <Send className="w-3.5 h-3.5 text-amber-200" />
                     {isSubmittingWish ? 'Sending Duas...' : 'Send Duas to Couple'}
@@ -497,15 +485,13 @@ export default function Home() {
                 </form>
               )}
             </div>
-          </section>
-        )}
+          )}
+        </section>
 
-        {/* RSVP Integration Component */}
         <div className="pt-2">
           <RSVPSection />
         </div>
 
-        {/* Footer */}
         <footer className="text-center text-[10px] text-slate-400 pt-6 pb-2 tracking-[0.25em] font-serif">
           MAY ALLAH BLESS THIS UNION • IBRAHIM & JAWERIYA
         </footer>
