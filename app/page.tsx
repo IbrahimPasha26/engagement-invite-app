@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FormEvent } from 'react';
 import {
   Heart, Calendar, MapPin, Clock, Sparkles,
   Send, Compass, Copy, Check, MessageCircle
 } from 'lucide-react';
 import RSVPSection from '../components/RSVPSection';
 
-const ENGAGEMENT_DATE = new Date('2026-11-15T18:00:00+05:30').getTime();
+const ENGAGEMENT_DATE = new Date('2026-11-15T14:30:00+05:30').getTime();
 const VENUE_ADDRESS = "S.S.N Function Hall, Kolar, Karnataka, India";
 const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE_ADDRESS)}`;
 
@@ -23,7 +23,7 @@ export default function Home() {
   const [wishSubmitted, setWishSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -53,7 +53,7 @@ export default function Home() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId;
+    let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
@@ -77,7 +77,15 @@ export default function Home() {
       hue: Math.random() * 30 + 340
     }));
 
-    const drawHeart = (context, x, y, size, color, opacity, angle) => {
+    const drawHeart = (
+      context: CanvasRenderingContext2D,
+      x: number,
+      y: number,
+      size: number,
+      color: string,
+      opacity: number,
+      angle: number
+    ) => {
       context.save();
       context.translate(x, y);
       context.rotate(angle);
@@ -95,7 +103,15 @@ export default function Home() {
       context.restore();
     };
 
-    const drawPetal = (context, x, y, size, color, opacity, angle) => {
+    const drawPetal = (
+      context: CanvasRenderingContext2D,
+      x: number,
+      y: number,
+      size: number,
+      color: string,
+      opacity: number,
+      angle: number
+    ) => {
       context.save();
       context.translate(x, y);
       context.rotate(angle);
@@ -145,7 +161,6 @@ export default function Home() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback for older browsers
       const textarea = document.createElement('textarea');
       textarea.value = VENUE_ADDRESS;
       document.body.appendChild(textarea);
@@ -166,7 +181,7 @@ export default function Home() {
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
   };
 
-  const handleWishSubmit = async (e) => {
+  const handleWishSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!wishName.trim() || !wishText.trim()) return;
 
@@ -377,7 +392,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-medium text-[11px] text-rose-300 uppercase tracking-wider">Time</p>
-                    <p className="text-slate-100 font-serif text-base">6:00 PM Onwards (IST)</p>
+                    <p className="text-slate-100 font-serif text-base">2:30 PM Onwards (IST)</p>
                   </div>
                 </div>
 
