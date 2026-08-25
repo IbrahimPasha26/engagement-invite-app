@@ -144,7 +144,7 @@ const CustomAudioPlayer = ({
   );
 };
 
-// --- STARDUST ENTRY INTRO SCREEN ---
+// --- STARDUST ENTRY INTRO SCREEN (With Floating Hearts) ---
 const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isOpening, setIsOpening] = useState(false);
@@ -172,14 +172,44 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
     };
     window.addEventListener("resize", handleResize);
 
-    const particles = Array.from({ length: 90 }, () => ({
+    // Stardust Sparkles
+    const particles = Array.from({ length: 80 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 1.6 + 0.4,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
+      radius: Math.random() * 1.5 + 0.4,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
       alpha: Math.random() * 0.8 + 0.2,
     }));
+
+    // Floating Golden Hearts for Entry Screen
+    const entryHearts = Array.from({ length: 18 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 9 + 7,
+      speedY: Math.random() * 0.35 + 0.2,
+      sway: Math.random() * 1.5 + 0.5,
+      phase: Math.random() * Math.PI * 2,
+      alpha: Math.random() * 0.4 + 0.35,
+    }));
+
+    const drawHeart = (x: number, y: number, size: number, alpha: number) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.beginPath();
+      const topCurveHeight = size * 0.3;
+      ctx.moveTo(0, topCurveHeight);
+      ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+      ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, size, 0, size * 1.2);
+      ctx.bezierCurveTo(0, size, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+      ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+      ctx.closePath();
+      ctx.fillStyle = `rgba(241, 211, 126, ${alpha})`;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#f1d37e";
+      ctx.fill();
+      ctx.restore();
+    };
 
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -198,6 +228,21 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
+      // Render Floating Hearts
+      entryHearts.forEach((h) => {
+        h.y -= h.speedY;
+        h.phase += 0.015;
+        const currentX = h.x + Math.sin(h.phase) * h.sway * 12;
+
+        if (h.y < -30) {
+          h.y = height + 20;
+          h.x = Math.random() * width;
+        }
+
+        drawHeart(currentX, h.y, h.size, h.alpha);
+      });
+
+      // Render Stardust
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -207,12 +252,12 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        p.alpha += Math.sin(Date.now() * 0.002 + p.radius) * 0.008;
+        p.alpha += Math.sin(Date.now() * 0.002 + p.radius) * 0.006;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(241, 211, 126, ${Math.max(0.1, Math.min(1, p.alpha))})`;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 6;
         ctx.shadowColor = "#f1d37e";
         ctx.fill();
       });
@@ -253,7 +298,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           The Engagement Celebration Of
         </span>
 
-        {/* Elegant Grouped Names */}
+        {/* Elegant Couple Names Display */}
         <div className="py-2 px-6 my-1 flex flex-col items-center space-y-1 overflow-visible w-full">
           <h1 className="text-4xl sm:text-5xl font-script gold-shimmer drop-shadow-md tracking-wide leading-tight inline-block pr-8 sm:pr-10">
             Ibrahim Pasha J
@@ -284,7 +329,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         </button>
 
         <p className="text-[10px] text-[#b89851]/70 font-sans-body mt-4 tracking-widest">
-          TAP TO OPEN
+          TAP TO OPEN & PLAY MUSIC
         </p>
       </div>
     </div>
@@ -653,12 +698,12 @@ export default function App() {
         audioRef={audioRef}
       />
 
-      {/* LAYER 1: Interactive Stardust Entry Intro */}
+      {/* LAYER 1: Interactive Stardust Entry Intro (with Glowing Hearts) */}
       {!isEntryComplete && (
         <StardustEntry onOpen={handleOpenInvitation} />
       )}
 
-      {/* LAYER 2: Floating Lanterns & Drifting Hearts Background */}
+      {/* LAYER 2: Slow Ambient Floating Lanterns & Drifting Hearts */}
       {isEntryComplete && (
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <FloatingLanterns />

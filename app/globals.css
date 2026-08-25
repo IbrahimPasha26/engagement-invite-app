@@ -13,34 +13,40 @@
 
 @keyframes drift-left-to-right {
   0% {
-    transform: translateX(-60px) translateY(0) rotate(0deg);
+    transform: translateX(-120px) translateY(0px) rotate(0deg);
     opacity: 0;
   }
-  10% {
-    opacity: 0.85;
+  8% {
+    opacity: 0.9;
   }
-  90% {
-    opacity: 0.85;
+  50% {
+    transform: translateX(50vw) translateY(-14px) rotate(6deg);
+  }
+  92% {
+    opacity: 0.9;
   }
   100% {
-    transform: translateX(105vw) translateY(-25px) rotate(15deg);
+    transform: translateX(110vw) translateY(-25px) rotate(12deg);
     opacity: 0;
   }
 }
 
 @keyframes drift-right-to-left {
   0% {
-    transform: translateX(105vw) translateY(0) rotate(0deg);
+    transform: translateX(110vw) translateY(0px) rotate(0deg);
     opacity: 0;
   }
-  10% {
-    opacity: 0.85;
+  8% {
+    opacity: 0.9;
   }
-  90% {
-    opacity: 0.85;
+  50% {
+    transform: translateX(50vw) translateY(14px) rotate(-6deg);
+  }
+  92% {
+    opacity: 0.9;
   }
   100% {
-    transform: translateX(-60px) translateY(25px) rotate(-15deg);
+    transform: translateX(-120px) translateY(25px) rotate(-12deg);
     opacity: 0;
   }
 }
@@ -50,13 +56,13 @@
     transform: scale(1);
   }
   15% {
-    transform: scale(1.22);
+    transform: scale(1.16);
   }
   30% {
     transform: scale(1);
   }
   45% {
-    transform: scale(1.15);
+    transform: scale(1.1);
   }
 }
 
@@ -64,16 +70,16 @@
   animation-name: drift-left-to-right;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
 .drift-rtl {
   animation-name: drift-right-to-left;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
 .animate-heartbeat {
-  animation: heartbeat 2s infinite ease-in-out;
+  animation: heartbeat 2.6s infinite ease-in-out;
 }
