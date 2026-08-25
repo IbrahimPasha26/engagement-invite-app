@@ -144,7 +144,7 @@ const CustomAudioPlayer = ({
   );
 };
 
-// --- STARDUST ENTRY INTRO SCREEN ---
+// --- STARDUST ENTRY INTRO SCREEN (With Multi-Tonal Canvas Hearts) ---
 const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isOpening, setIsOpening] = useState(false);
@@ -181,17 +181,25 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       alpha: Math.random() * 0.8 + 0.2,
     }));
 
-    const entryHearts = Array.from({ length: 18 }, () => ({
+    const colorTones = [
+      { fill: "241, 211, 126", glow: "#f1d37e" }, // Gold
+      { fill: "244, 168, 150", glow: "#f4a896" }, // Rose Gold
+      { fill: "253, 251, 247", glow: "#fdfbf7" }, // Pearl White
+      { fill: "94, 234, 212",  glow: "#5eead4" }, // Emerald Mint
+    ];
+
+    const entryHearts = Array.from({ length: 22 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 9 + 7,
+      size: Math.random() * 9 + 6,
       speedY: Math.random() * 0.35 + 0.2,
       sway: Math.random() * 1.5 + 0.5,
       phase: Math.random() * Math.PI * 2,
       alpha: Math.random() * 0.4 + 0.35,
+      tone: colorTones[Math.floor(Math.random() * colorTones.length)],
     }));
 
-    const drawHeart = (x: number, y: number, size: number, alpha: number) => {
+    const drawHeart = (x: number, y: number, size: number, alpha: number, tone: typeof colorTones[0]) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.beginPath();
@@ -202,9 +210,9 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.bezierCurveTo(0, size, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
       ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
       ctx.closePath();
-      ctx.fillStyle = `rgba(241, 211, 126, ${alpha})`;
+      ctx.fillStyle = `rgba(${tone.fill}, ${alpha})`;
       ctx.shadowBlur = 10;
-      ctx.shadowColor = "#f1d37e";
+      ctx.shadowColor = tone.glow;
       ctx.fill();
       ctx.restore();
     };
@@ -226,6 +234,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
+      // Render Multi-Tonal Floating Hearts
       entryHearts.forEach((h) => {
         h.y -= h.speedY;
         h.phase += 0.015;
@@ -236,9 +245,10 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           h.x = Math.random() * width;
         }
 
-        drawHeart(currentX, h.y, h.size, h.alpha);
+        drawHeart(currentX, h.y, h.size, h.alpha, h.tone);
       });
 
+      // Render Stardust
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -294,7 +304,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           The Engagement Celebration Of
         </span>
 
-        {/* Elegant Couple Names Display */}
+        {/* Couple Names Display */}
         <div className="py-2 px-6 my-1 flex flex-col items-center space-y-1 overflow-visible w-full">
           <h1 className="text-4xl sm:text-5xl font-script gold-shimmer drop-shadow-md tracking-wide leading-tight inline-block pr-8 sm:pr-10">
             Ibrahim Pasha J
@@ -694,12 +704,12 @@ export default function App() {
         audioRef={audioRef}
       />
 
-      {/* LAYER 1: Interactive Stardust Entry Intro (with Glowing Canvas Hearts) */}
+      {/* LAYER 1: Interactive Stardust Entry Intro (with Multi-Tonal Canvas Hearts) */}
       {!isEntryComplete && (
         <StardustEntry onOpen={handleOpenInvitation} />
       )}
 
-      {/* LAYER 2: Slow Ambient Celestial Sparkles & Drifting Hearts Background */}
+      {/* LAYER 2: Slow Ambient Celestial Sparkles & Multi-Tonal Drifting Hearts */}
       {isEntryComplete && (
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <FloatingLanterns />
@@ -743,16 +753,17 @@ export default function App() {
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#b89851]/60"></div>
           </div>
 
-          {/* Bride & Groom Couple Names with Over-Text Micro-Heart Accent */}
+          {/* Bride & Groom Couple Names with Multi-Tonal Micro-Heart Accents */}
           <div className="relative my-2 space-y-1.5 w-full overflow-visible">
-            {/* Ambient Foreground Micro-Hearts drifting above typography */}
+            {/* Rose Gold Accent Micro-Heart */}
             <div className="absolute -top-3 right-8 pointer-events-none opacity-85 animate-pulse">
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#f1d37e] drop-shadow-[0_0_8px_rgba(241,211,126,0.9)]">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#f4a896] drop-shadow-[0_0_8px_rgba(244,168,150,0.9)]">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             </div>
+            {/* Emerald Mint Accent Micro-Heart */}
             <div className="absolute top-1/2 -left-2 pointer-events-none opacity-75 animate-bounce">
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-[#f1d37e] drop-shadow-[0_0_6px_rgba(241,211,126,0.8)]">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-[#5eead4] drop-shadow-[0_0_7px_rgba(94,234,212,0.85)]">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
             </div>
