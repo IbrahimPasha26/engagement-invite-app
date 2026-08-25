@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type DriftingElement = {
   id: number;
-  type: "lantern" | "heart";
+  type: "crystal" | "heart";
   top: string;
   direction: "left-to-right" | "right-to-left";
   animationDuration: string;
@@ -27,8 +27,8 @@ export default function FloatingLanterns() {
   const [stars, setStars] = useState<TwinklingStar[]>([]);
 
   useEffect(() => {
-    // 70 Twinkling ambient 4-point stars
-    const generatedStars: TwinklingStar[] = Array.from({ length: 70 }).map((_, i) => ({
+    // 75 Sparkling background stars
+    const generatedStars: TwinklingStar[] = Array.from({ length: 75 }).map((_, i) => ({
       id: i,
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
@@ -37,19 +37,19 @@ export default function FloatingLanterns() {
       animationDelay: `-${Math.random() * 5}s`,
     }));
 
-    // 55 Drifters moving at a calm, serene pace (30s to 55s)
-    const generatedDrifters: DriftingElement[] = Array.from({ length: 55 }).map((_, i) => {
-      const isHeart = Math.random() < 0.65;
-      const duration = Math.random() * 25 + 30; // Calm 30s – 55s cycle
+    // 50 Drifting golden hearts and celestial sparkle gems (30s – 55s cycle)
+    const generatedDrifters: DriftingElement[] = Array.from({ length: 50 }).map((_, i) => {
+      const isHeart = Math.random() < 0.7; // 70% hearts, 30% starburst crystals
+      const duration = Math.random() * 25 + 30;
 
       return {
         id: i,
-        type: isHeart ? "heart" : "lantern",
+        type: isHeart ? "heart" : "crystal",
         top: `${Math.random() * 95}%`,
         direction: i % 2 === 0 ? "left-to-right" : "right-to-left",
         animationDuration: `${duration.toFixed(2)}s`,
         animationDelay: `-${(Math.random() * duration).toFixed(2)}s`,
-        scale: isHeart ? Math.random() * 0.4 + 0.55 : Math.random() * 0.3 + 0.55,
+        scale: isHeart ? Math.random() * 0.45 + 0.55 : Math.random() * 0.35 + 0.6,
         opacity: Math.random() * 0.3 + 0.6,
       };
     });
@@ -60,7 +60,7 @@ export default function FloatingLanterns() {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none w-full h-full">
-      {/* LAYER A: Sparkling 4-Pointed Stars */}
+      {/* LAYER A: Ambient 4-Point Stars */}
       {stars.map((star) => (
         <svg
           key={`star-${star.id}`}
@@ -72,7 +72,7 @@ export default function FloatingLanterns() {
             height: star.size,
             animationDuration: star.animationDuration,
             animationDelay: star.animationDelay,
-            filter: "drop-shadow(0 0 6px rgba(249, 229, 150, 0.8))",
+            filter: "drop-shadow(0 0 6px rgba(249, 229, 150, 0.85))",
           }}
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -81,7 +81,7 @@ export default function FloatingLanterns() {
         </svg>
       ))}
 
-      {/* LAYER B: Horizontally Drifting Lanterns & Hearts */}
+      {/* LAYER B: Floating Golden Hearts & Radiant Diamond Crystals */}
       {driftingItems.map((el) => (
         <div
           key={`drifter-${el.id}`}
@@ -94,13 +94,20 @@ export default function FloatingLanterns() {
             opacity: el.opacity,
           }}
         >
-          {el.type === "lantern" ? (
-            <div className="relative w-7 h-11 bg-gradient-to-b from-[#ffe066] via-[#f59e0b] to-[#b45309] rounded-sm shadow-[0_0_24px_rgba(245,158,11,0.75)] flex justify-center">
-              <div className="absolute -top-2 w-4 h-2.5 border-t-2 border-x-2 border-[#b89851] rounded-t-full"></div>
-              <div className="absolute top-1.5 w-3.5 h-7 bg-white/30 blur-[2px] rounded-full"></div>
-              <div className="absolute -bottom-1.5 w-2 h-1 bg-[#854d0e] rounded-b-sm"></div>
+          {el.type === "crystal" ? (
+            /* Celestial Diamond Crystal Starburst */
+            <div className="relative p-1">
+              <svg
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6 text-[#f5d061] drop-shadow-[0_0_15px_rgba(245,208,97,0.9)] animate-pulse"
+              >
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
+                <circle cx="12" cy="12" r="2" fill="#ffffff" />
+              </svg>
             </div>
           ) : (
+            /* Glowing Floating Heart */
             <div className="relative p-1">
               <svg
                 viewBox="0 0 24 24"

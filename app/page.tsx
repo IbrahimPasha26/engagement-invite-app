@@ -144,7 +144,7 @@ const CustomAudioPlayer = ({
   );
 };
 
-// --- STARDUST ENTRY INTRO SCREEN (With Floating Hearts) ---
+// --- STARDUST ENTRY INTRO SCREEN ---
 const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isOpening, setIsOpening] = useState(false);
@@ -172,7 +172,6 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
     };
     window.addEventListener("resize", handleResize);
 
-    // Stardust Sparkles
     const particles = Array.from({ length: 80 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -182,7 +181,6 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       alpha: Math.random() * 0.8 + 0.2,
     }));
 
-    // Floating Golden Hearts for Entry Screen
     const entryHearts = Array.from({ length: 18 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
@@ -228,7 +226,6 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
-      // Render Floating Hearts
       entryHearts.forEach((h) => {
         h.y -= h.speedY;
         h.phase += 0.015;
@@ -242,7 +239,6 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         drawHeart(currentX, h.y, h.size, h.alpha);
       });
 
-      // Render Stardust
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -698,12 +694,12 @@ export default function App() {
         audioRef={audioRef}
       />
 
-      {/* LAYER 1: Interactive Stardust Entry Intro (with Glowing Hearts) */}
+      {/* LAYER 1: Interactive Stardust Entry Intro (with Glowing Canvas Hearts) */}
       {!isEntryComplete && (
         <StardustEntry onOpen={handleOpenInvitation} />
       )}
 
-      {/* LAYER 2: Slow Ambient Floating Lanterns & Drifting Hearts */}
+      {/* LAYER 2: Slow Ambient Celestial Sparkles & Drifting Hearts Background */}
       {isEntryComplete && (
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <FloatingLanterns />
@@ -747,8 +743,20 @@ export default function App() {
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#b89851]/60"></div>
           </div>
 
-          {/* Bride & Groom Couple Names */}
-          <div className="my-2 space-y-1.5 w-full overflow-visible">
+          {/* Bride & Groom Couple Names with Over-Text Micro-Heart Accent */}
+          <div className="relative my-2 space-y-1.5 w-full overflow-visible">
+            {/* Ambient Foreground Micro-Hearts drifting above typography */}
+            <div className="absolute -top-3 right-8 pointer-events-none opacity-85 animate-pulse">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#f1d37e] drop-shadow-[0_0_8px_rgba(241,211,126,0.9)]">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </div>
+            <div className="absolute top-1/2 -left-2 pointer-events-none opacity-75 animate-bounce">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-[#f1d37e] drop-shadow-[0_0_6px_rgba(241,211,126,0.8)]">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+            </div>
+
             <div className="py-1 px-4 overflow-visible">
               <h1 className="text-[#f1d37e] font-script text-4xl sm:text-6xl md:text-7xl tracking-wide gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] leading-relaxed inline-block pr-8 sm:pr-10">
                 Ibrahim Pasha J
