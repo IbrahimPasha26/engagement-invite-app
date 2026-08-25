@@ -80,7 +80,7 @@ const RingIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
-// --- CUSTOM MP3 AUDIO CONTROLLER ---
+// --- COMPACT ICON-ONLY MP3 CONTROLLER ---
 const CustomAudioPlayer = ({
   isPlaying,
   setIsPlaying,
@@ -118,33 +118,29 @@ const CustomAudioPlayer = ({
       <audio ref={audioRef} src="/audio/bg-music.mp3" loop preload="auto" playsInline />
       <button
         onClick={toggleMusic}
-        className="fixed top-4 right-4 z-50 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#081e17]/85 backdrop-blur-md border border-[#b89851]/40 text-[#f1d37e] text-[11px] font-serif-sub tracking-wider shadow-lg active:scale-95 transition-all duration-300"
-        title="Toggle Background Music"
+        className="fixed top-4 right-4 z-50 w-10 h-10 rounded-full bg-[#081e17]/85 backdrop-blur-md border border-[#b89851]/50 text-[#f1d37e] flex items-center justify-center shadow-lg active:scale-95 transition-all duration-300 hover:border-[#f1d37e] hover:shadow-[0_0_15px_rgba(241,211,126,0.35)]"
+        title={isPlaying ? "Mute Music" : "Play Music"}
+        aria-label="Toggle Music"
       >
-        <span className="relative flex h-2 w-2">
-          {isPlaying && (
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f1d37e] opacity-75"></span>
-          )}
-          <span
-            className={`relative inline-flex rounded-full h-2 w-2 ${
-              isPlaying ? "bg-[#f1d37e]" : "bg-gray-500"
-            }`}
-          ></span>
-        </span>
-        <span>{isPlaying ? "Music On" : "Play Music"}</span>
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className={`w-3.5 h-3.5 ${isPlaying ? "animate-pulse" : ""}`}
-        >
-          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-        </svg>
+        {isPlaying ? (
+          <div className="relative flex items-center justify-center">
+            <span className="animate-ping absolute inline-flex h-6 w-6 rounded-full bg-[#f1d37e]/20"></span>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 animate-pulse text-[#f1d37e]">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+            </svg>
+          </div>
+        ) : (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5 text-gray-400">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+            <line x1="3" y1="3" x2="21" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        )}
       </button>
     </>
   );
 };
 
-// --- STARDUST ENTRY INTRO SCREEN (With Multi-Tonal Canvas Hearts) ---
+// --- STARDUST ENTRY INTRO SCREEN ---
 const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isOpening, setIsOpening] = useState(false);
@@ -172,48 +168,65 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
     };
     window.addEventListener("resize", handleResize);
 
-    const particles = Array.from({ length: 80 }, () => ({
+    const particles = Array.from({ length: 70 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       radius: Math.random() * 1.5 + 0.4,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      alpha: Math.random() * 0.8 + 0.2,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      alpha: Math.random() * 0.75 + 0.25,
     }));
 
     const colorTones = [
-      { fill: "241, 211, 126", glow: "#f1d37e" }, // Gold
-      { fill: "244, 168, 150", glow: "#f4a896" }, // Rose Gold
-      { fill: "253, 251, 247", glow: "#fdfbf7" }, // Pearl White
-      { fill: "94, 234, 212",  glow: "#5eead4" }, // Emerald Mint
+      { fill: "241, 211, 126", glow: "#f1d37e" },
+      { fill: "244, 168, 150", glow: "#f4a896" },
+      { fill: "253, 251, 247", glow: "#fdfbf7" },
+      { fill: "94, 234, 212", glow: "#5eead4" },
     ];
 
-    const entryHearts = Array.from({ length: 22 }, () => ({
+    const entryHearts = Array.from({ length: 16 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 9 + 6,
-      speedY: Math.random() * 0.35 + 0.2,
-      sway: Math.random() * 1.5 + 0.5,
+      size: Math.random() * 10 + 6,
+      speedY: Math.random() * 0.28 + 0.15,
+      sway: Math.random() * 1.2 + 0.4,
       phase: Math.random() * Math.PI * 2,
-      alpha: Math.random() * 0.4 + 0.35,
+      alpha: Math.random() * 0.35 + 0.35,
+      isOutline: Math.random() < 0.3,
       tone: colorTones[Math.floor(Math.random() * colorTones.length)],
     }));
 
-    const drawHeart = (x: number, y: number, size: number, alpha: number, tone: typeof colorTones[0]) => {
+    const drawCurvedHeart = (
+      x: number,
+      y: number,
+      size: number,
+      alpha: number,
+      tone: typeof colorTones[0],
+      isOutline: boolean
+    ) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.beginPath();
-      const topCurveHeight = size * 0.3;
+      const topCurveHeight = size * 0.32;
       ctx.moveTo(0, topCurveHeight);
       ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
-      ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, size, 0, size * 1.2);
-      ctx.bezierCurveTo(0, size, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+      ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, size * 1.05, 0, size * 1.25);
+      ctx.bezierCurveTo(0, size * 1.05, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
       ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
       ctx.closePath();
-      ctx.fillStyle = `rgba(${tone.fill}, ${alpha})`;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = tone.glow;
-      ctx.fill();
+
+      if (isOutline) {
+        ctx.strokeStyle = `rgba(${tone.fill}, ${alpha * 1.2})`;
+        ctx.lineWidth = 1.2;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = tone.glow;
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = `rgba(${tone.fill}, ${alpha})`;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = tone.glow;
+        ctx.fill();
+      }
       ctx.restore();
     };
 
@@ -234,21 +247,19 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
-      // Render Multi-Tonal Floating Hearts
       entryHearts.forEach((h) => {
         h.y -= h.speedY;
-        h.phase += 0.015;
-        const currentX = h.x + Math.sin(h.phase) * h.sway * 12;
+        h.phase += 0.012;
+        const currentX = h.x + Math.sin(h.phase) * h.sway * 10;
 
-        if (h.y < -30) {
+        if (h.y < -35) {
           h.y = height + 20;
           h.x = Math.random() * width;
         }
 
-        drawHeart(currentX, h.y, h.size, h.alpha, h.tone);
+        drawCurvedHeart(currentX, h.y, h.size, h.alpha, h.tone, h.isOutline);
       });
 
-      // Render Stardust
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -296,6 +307,97 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         <CornerOrnament className="absolute bottom-2 left-2 transform -rotate-90" />
         <CornerOrnament className="absolute bottom-2 right-2 transform rotate-180" />
 
+        {/* --- SCATTERED INSIDE-CARD STARS & GLOWING MICRO-HEARTS --- */}
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-7 left-10 w-3.5 h-3.5 text-[#f1d37e]/55 animate-pulse pointer-events-none"
+        >
+          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-6 right-10 w-4 h-4 text-[#fdfbf7]/60 animate-pulse pointer-events-none"
+        >
+          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-14 left-6 w-3.5 h-3.5 text-[#f4a896]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(244,168,150,0.7)]"
+        >
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 28"
+          fill="currentColor"
+          className="absolute top-14 right-7 w-3 h-4 text-[#f1d37e]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(241,211,126,0.6)]"
+        >
+          <path d="M12 26C11 23 2 15 2 8a6 6 0 0 1 10-4.5A6 6 0 0 1 22 8c0 7-9 15-10 18z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-24 left-8 w-2.5 h-2.5 text-[#f1d37e]/50 animate-pulse pointer-events-none"
+        >
+          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          className="absolute top-[42%] left-5 w-4 h-4 text-[#5eead4]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(94,234,212,0.7)]"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-[46%] right-5 w-3.5 h-3.5 text-[#fdfbf7]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(253,251,247,0.8)]"
+        >
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-[60%] left-7 w-3 h-3 text-[#f1d37e]/45 animate-pulse pointer-events-none"
+        >
+          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute top-[62%] right-7 w-3.5 h-3.5 text-[#f4a896]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(244,168,150,0.7)]"
+        >
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute bottom-24 right-10 w-3 h-3 text-[#f1d37e]/45 animate-pulse pointer-events-none"
+        >
+          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+        </svg>
+
+        <svg
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="absolute bottom-16 left-9 w-3.5 h-3.5 text-[#f1d37e]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(241,211,126,0.7)]"
+        >
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+
         <p className="text-[#f1d37e] font-arabic text-2xl tracking-widest mb-3">
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
@@ -335,7 +437,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         </button>
 
         <p className="text-[10px] text-[#b89851]/70 font-sans-body mt-4 tracking-widest">
-          TAP TO OPEN & PLAY MUSIC
+          TAP TO OPEN
         </p>
       </div>
     </div>
@@ -659,8 +761,31 @@ export default function App() {
   const [isEntryComplete, setIsEntryComplete] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const autoScrollAnimRef = useRef<number | null>(null);
+  const autoScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Disable browser scroll restoration & reset scroll position
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  const stopAutoScroll = () => {
+    if (autoScrollAnimRef.current) {
+      cancelAnimationFrame(autoScrollAnimRef.current);
+      autoScrollAnimRef.current = null;
+    }
+    if (autoScrollTimeoutRef.current) {
+      clearTimeout(autoScrollTimeoutRef.current);
+      autoScrollTimeoutRef.current = null;
+    }
+  };
 
   const handleOpenInvitation = () => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+
     if (audioRef.current) {
       audioRef.current.play().then(() => {
         setIsPlayingMusic(true);
@@ -670,8 +795,44 @@ export default function App() {
     }
     setTimeout(() => {
       setIsEntryComplete(true);
+      window.scrollTo(0, 0);
     }, 850);
   };
+
+  // Automated Smooth Reading Scroll Sequence
+  useEffect(() => {
+    if (!isEntryComplete) return;
+
+    autoScrollTimeoutRef.current = setTimeout(() => {
+      const step = () => {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (window.scrollY >= maxScroll - 5) {
+          stopAutoScroll();
+          return;
+        }
+        window.scrollBy({ top: 1.0, behavior: "auto" });
+        autoScrollAnimRef.current = requestAnimationFrame(step);
+      };
+      autoScrollAnimRef.current = requestAnimationFrame(step);
+    }, 2500);
+
+    const handleUserInteraction = (e: Event) => {
+      if (e.isTrusted) {
+        stopAutoScroll();
+      }
+    };
+
+    window.addEventListener("wheel", handleUserInteraction, { passive: true });
+    window.addEventListener("touchstart", handleUserInteraction, { passive: true });
+    window.addEventListener("keydown", handleUserInteraction, { passive: true });
+
+    return () => {
+      stopAutoScroll();
+      window.removeEventListener("wheel", handleUserInteraction);
+      window.removeEventListener("touchstart", handleUserInteraction);
+      window.removeEventListener("keydown", handleUserInteraction);
+    };
+  }, [isEntryComplete]);
 
   // Mobile scroll-in-view observer
   useEffect(() => {
@@ -697,19 +858,19 @@ export default function App() {
     <main className="relative min-h-screen w-full bg-[#030e0a] text-gray-100 overflow-x-hidden font-sans-body select-none">
       <FontAndStyleInjector />
 
-      {/* Floating Audio Controller */}
+      {/* Floating Audio Controller (Compact Icon-Only) */}
       <CustomAudioPlayer
         isPlaying={isPlayingMusic}
         setIsPlaying={setIsPlayingMusic}
         audioRef={audioRef}
       />
 
-      {/* LAYER 1: Interactive Stardust Entry Intro (with Multi-Tonal Canvas Hearts) */}
+      {/* LAYER 1: Interactive Stardust Entry Intro */}
       {!isEntryComplete && (
         <StardustEntry onOpen={handleOpenInvitation} />
       )}
 
-      {/* LAYER 2: Slow Ambient Celestial Sparkles & Multi-Tonal Drifting Hearts */}
+      {/* LAYER 2: Slow Ambient Multi-Silhouette Hearts & Celestial Sparkles Background */}
       {isEntryComplete && (
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <FloatingLanterns />
@@ -753,18 +914,18 @@ export default function App() {
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#b89851]/60"></div>
           </div>
 
-          {/* Bride & Groom Couple Names with Multi-Tonal Micro-Heart Accents */}
+          {/* Bride & Groom Couple Names with Organic Micro-Heart Accents */}
           <div className="relative my-2 space-y-1.5 w-full overflow-visible">
-            {/* Rose Gold Accent Micro-Heart */}
-            <div className="absolute -top-3 right-8 pointer-events-none opacity-85 animate-pulse">
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-[#f4a896] drop-shadow-[0_0_8px_rgba(244,168,150,0.9)]">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            {/* Rose Gold Slender Accent Heart */}
+            <div className="absolute -top-3 right-8 pointer-events-none opacity-80 animate-pulse">
+              <svg viewBox="0 0 24 28" fill="currentColor" className="w-3.5 h-5 text-[#f4a896] drop-shadow-[0_0_8px_rgba(244,168,150,0.85)]">
+                <path d="M12 26C11 23 2 15 2 8a6 6 0 0 1 10-4.5A6 6 0 0 1 22 8c0 7-9 15-10 18z" />
               </svg>
             </div>
-            {/* Emerald Mint Accent Micro-Heart */}
+            {/* Emerald Mint Outlined Accent Heart */}
             <div className="absolute top-1/2 -left-2 pointer-events-none opacity-75 animate-bounce">
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-[#5eead4] drop-shadow-[0_0_7px_rgba(94,234,212,0.85)]">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-3.5 h-3.5 text-[#5eead4] drop-shadow-[0_0_7px_rgba(94,234,212,0.85)]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
               </svg>
             </div>
 
