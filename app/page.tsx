@@ -252,7 +252,6 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
-      // Render Floating Hearts
       entryHearts.forEach((h) => {
         h.y -= h.speedY;
         h.phase += 0.012;
@@ -266,7 +265,6 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         drawCurvedHeart(currentX, h.y, h.size, h.alpha, h.tone, h.isOutline);
       });
 
-      // Render Stardust
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -314,7 +312,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         <CornerOrnament className="absolute bottom-2 left-2 transform -rotate-90" />
         <CornerOrnament className="absolute bottom-2 right-2 transform rotate-180" />
 
-        {/* --- SCATTERED INSIDE-CARD STARS & GLOWING MICRO-HEARTS --- */}
+        {/* Scattered Inside-Card Stars & Micro-Hearts */}
         <svg
           viewBox="0 0 24 24"
           fill="currentColor"
@@ -355,11 +353,11 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           The Engagement Celebration Of
         </span>
 
-        {/* --- COUPLE NAMES: SINGLE LINE PROPORTIONED --- */}
+        {/* Couple Names: Single Line Proportioned (Boosted for Mobile Presence) */}
         <div className="py-1 px-2 my-1 flex flex-col items-center space-y-2 overflow-visible w-full max-w-full">
           {/* Groom Single Line */}
           <div className="flex flex-col items-center w-full">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
+            <h1 className="text-[27px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
               Ibrahim Pasha J
             </h1>
             <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
@@ -371,7 +369,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
 
           {/* Bride Single Line */}
           <div className="flex flex-col items-center w-full">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
+            <h1 className="text-[27px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
               Jaweriya Mohammadi
             </h1>
             <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
@@ -894,7 +892,7 @@ export default function App() {
 
             {/* Groom Section */}
             <div className="py-1 px-2 overflow-visible flex flex-col items-center w-full">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
+              <h1 className="text-[30px] sm:text-[38px] md:text-[46px] font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
                 Ibrahim Pasha J
               </h1>
               <span className="text-[9px] sm:text-[11px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
@@ -919,7 +917,7 @@ export default function App() {
 
             {/* Bride Section */}
             <div className="py-1 px-2 overflow-visible flex flex-col items-center w-full">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
+              <h1 className="text-[30px] sm:text-[38px] md:text-[46px] font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
                 Jaweriya Mohammadi
               </h1>
               <span className="text-[9px] sm:text-[11px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
