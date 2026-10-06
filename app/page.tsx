@@ -6,9 +6,14 @@ import FloatingLanterns from "@/components/FloatingLanterns";
 // --- INLINE STYLES & FONTS INJECTOR ---
 const FontAndStyleInjector = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Alex+Brush&family=Amiri:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Pinyon+Script&family=Amiri:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-    .font-script { font-family: 'Alex Brush', cursive; }
+    .font-script {
+      font-family: 'Great Vibes', 'Pinyon Script', cursive;
+      font-weight: 400;
+      letter-spacing: 0.015em;
+    }
+
     .font-serif-header { font-family: 'Cinzel Decorative', 'Cinzel', serif; }
     .font-serif-sub { font-family: 'Cinzel', serif; }
     .font-arabic { font-family: 'Amiri', serif; }
@@ -247,6 +252,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
+      // Render Floating Hearts
       entryHearts.forEach((h) => {
         h.y -= h.speedY;
         h.phase += 0.012;
@@ -260,6 +266,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         drawCurvedHeart(currentX, h.y, h.size, h.alpha, h.tone, h.isOutline);
       });
 
+      // Render Stardust
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -300,7 +307,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
 
       <div
         onClick={handleOpenClick}
-        className="relative z-10 flex flex-col items-center text-center px-6 sm:px-10 py-10 max-w-md mx-4 rounded-3xl bg-[#061912]/85 border border-[#b89851]/40 backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.85)] animate-float overflow-visible cursor-pointer"
+        className="relative z-10 flex flex-col items-center text-center px-4 sm:px-8 py-9 max-w-lg mx-3 sm:mx-4 rounded-3xl bg-[#061912]/90 border border-[#b89851]/40 backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.85)] animate-float overflow-visible cursor-pointer"
       >
         <CornerOrnament className="absolute top-2 left-2" />
         <CornerOrnament className="absolute top-2 right-2 transform rotate-90" />
@@ -340,84 +347,40 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           <path d="M12 26C11 23 2 15 2 8a6 6 0 0 1 10-4.5A6 6 0 0 1 22 8c0 7-9 15-10 18z" />
         </svg>
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-24 left-8 w-2.5 h-2.5 text-[#f1d37e]/50 animate-pulse pointer-events-none"
-        >
-          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
-        </svg>
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          className="absolute top-[42%] left-5 w-4 h-4 text-[#5eead4]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(94,234,212,0.7)]"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-        </svg>
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-[46%] right-5 w-3.5 h-3.5 text-[#fdfbf7]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(253,251,247,0.8)]"
-        >
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-        </svg>
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-[60%] left-7 w-3 h-3 text-[#f1d37e]/45 animate-pulse pointer-events-none"
-        >
-          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
-        </svg>
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-[62%] right-7 w-3.5 h-3.5 text-[#f4a896]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(244,168,150,0.7)]"
-        >
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-        </svg>
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute bottom-24 right-10 w-3 h-3 text-[#f1d37e]/45 animate-pulse pointer-events-none"
-        >
-          <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
-        </svg>
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute bottom-16 left-9 w-3.5 h-3.5 text-[#f1d37e]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(241,211,126,0.7)]"
-        >
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-        </svg>
-
-        <p className="text-[#f1d37e] font-arabic text-2xl tracking-widest mb-3">
+        <p className="text-[#f1d37e] font-arabic text-xl sm:text-2xl tracking-widest mb-2.5">
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
 
-        <span className="text-[#b89851] font-serif-sub text-[11px] sm:text-xs uppercase tracking-[0.3em] mb-4">
+        <span className="text-[#b89851] font-serif-sub text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-4">
           The Engagement Celebration Of
         </span>
 
-        {/* Couple Names Display */}
-        <div className="py-2 px-6 my-1 flex flex-col items-center space-y-1 overflow-visible w-full">
-          <h1 className="text-4xl sm:text-5xl font-script gold-shimmer drop-shadow-md tracking-wide leading-tight inline-block pr-8 sm:pr-10">
-            Ibrahim Pasha J
-          </h1>
+        {/* --- COUPLE NAMES: SINGLE LINE PROPORTIONED --- */}
+        <div className="py-1 px-2 my-1 flex flex-col items-center space-y-2 overflow-visible w-full max-w-full">
+          {/* Groom Single Line */}
+          <div className="flex flex-col items-center w-full">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
+              Ibrahim Pasha J
+            </h1>
+            <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
+              Software Engineer
+            </span>
+          </div>
+
           <span className="text-lg sm:text-xl font-script text-[#f1d37e] opacity-80 my-0.5">&</span>
-          <h1 className="text-4xl sm:text-5xl font-script gold-shimmer drop-shadow-md tracking-wide leading-tight inline-block px-4">
-            Jaweriya Mohammadi
-          </h1>
+
+          {/* Bride Single Line */}
+          <div className="flex flex-col items-center w-full">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
+              Jaweriya Mohammadi
+            </h1>
+            <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
+              Data Analyst
+            </span>
+          </div>
         </div>
 
-        <p className="text-gray-300 font-serif-sub text-[11px] sm:text-xs tracking-[0.25em] uppercase mt-4 mb-8 opacity-80">
+        <p className="text-gray-300 font-serif-sub text-[10px] sm:text-xs tracking-[0.25em] uppercase mt-4 mb-7 opacity-80">
           Save The Date • November 15, 2026
         </p>
 
@@ -428,15 +391,15 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           }}
           className="relative group p-1 rounded-full bg-gradient-to-tr from-[#8a6822] via-[#f1d37e] to-[#b89851] shadow-[0_0_25px_rgba(241,211,126,0.5)] active:scale-95 transition-all duration-300"
         >
-          <div className="px-8 py-3.5 rounded-full bg-[#051510] flex items-center gap-3 transition-colors duration-300 group-hover:bg-[#0a231b]">
+          <div className="px-8 py-3 rounded-full bg-[#051510] flex items-center gap-3 transition-colors duration-300 group-hover:bg-[#0a231b]">
             <RingIcon className="w-5 h-5 text-[#f1d37e] animate-pulse" />
-            <span className="font-serif-sub text-sm tracking-[0.25em] text-[#f1d37e] uppercase font-semibold">
+            <span className="font-serif-sub text-xs sm:text-sm tracking-[0.25em] text-[#f1d37e] uppercase font-semibold">
               Open Invitation
             </span>
           </div>
         </button>
 
-        <p className="text-[10px] text-[#b89851]/70 font-sans-body mt-4 tracking-widest">
+        <p className="text-[10px] text-[#b89851]/70 font-sans-body mt-3 tracking-widest">
           TAP TO OPEN
         </p>
       </div>
@@ -858,7 +821,7 @@ export default function App() {
     <main className="relative min-h-screen w-full bg-[#030e0a] text-gray-100 overflow-x-hidden font-sans-body select-none">
       <FontAndStyleInjector />
 
-      {/* Floating Audio Controller (Compact Icon-Only) */}
+      {/* Floating Audio Controller */}
       <CustomAudioPlayer
         isPlaying={isPlayingMusic}
         setIsPlaying={setIsPlayingMusic}
@@ -914,8 +877,8 @@ export default function App() {
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#b89851]/60"></div>
           </div>
 
-          {/* Bride & Groom Couple Names with Organic Micro-Heart Accents */}
-          <div className="relative my-2 space-y-1.5 w-full overflow-visible">
+          {/* Bride & Groom Couple Names with Exact Copperplate Font & Proportioned Single-Line Layout */}
+          <div className="relative my-2 space-y-3 w-full overflow-visible">
             {/* Rose Gold Slender Accent Heart */}
             <div className="absolute -top-3 right-8 pointer-events-none opacity-80 animate-pulse">
               <svg viewBox="0 0 24 28" fill="currentColor" className="w-3.5 h-5 text-[#f4a896] drop-shadow-[0_0_8px_rgba(244,168,150,0.85)]">
@@ -929,14 +892,18 @@ export default function App() {
               </svg>
             </div>
 
-            <div className="py-1 px-4 overflow-visible">
-              <h1 className="text-[#f1d37e] font-script text-4xl sm:text-6xl md:text-7xl tracking-wide gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] leading-relaxed inline-block pr-8 sm:pr-10">
+            {/* Groom Section */}
+            <div className="py-1 px-2 overflow-visible flex flex-col items-center w-full">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
                 Ibrahim Pasha J
               </h1>
+              <span className="text-[9px] sm:text-[11px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
+                Software Engineer
+              </span>
             </div>
 
             {/* Intertwined Heart Divider */}
-            <div className="flex items-center justify-center space-x-4 my-1.5 w-full">
+            <div className="flex items-center justify-center space-x-4 my-2 w-full">
               <div className="h-[1px] w-14 bg-gradient-to-r from-transparent to-[#b89851]"></div>
               <div className="p-2 rounded-full bg-[#082018] border border-[#b89851]/40 shadow-lg">
                 <svg
@@ -950,10 +917,14 @@ export default function App() {
               <div className="h-[1px] w-14 bg-gradient-to-l from-transparent to-[#b89851]"></div>
             </div>
 
-            <div className="py-1 px-4 overflow-visible">
-              <h1 className="text-[#f1d37e] font-script text-4xl sm:text-6xl md:text-7xl tracking-wide gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] leading-relaxed inline-block px-4">
+            {/* Bride Section */}
+            <div className="py-1 px-2 overflow-visible flex flex-col items-center w-full">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
                 Jaweriya Mohammadi
               </h1>
+              <span className="text-[9px] sm:text-[11px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
+                Data Analyst
+              </span>
             </div>
           </div>
 
