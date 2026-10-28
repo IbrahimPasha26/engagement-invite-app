@@ -252,6 +252,7 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
       ctx.fillStyle = bgGrd;
       ctx.fillRect(0, 0, width, height);
 
+      // Render Floating Hearts
       entryHearts.forEach((h) => {
         h.y -= h.speedY;
         h.phase += 0.012;
@@ -313,35 +314,19 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
         <CornerOrnament className="absolute bottom-2 right-2 transform rotate-180" />
 
         {/* Scattered Inside-Card Stars & Micro-Hearts */}
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-7 left-10 w-3.5 h-3.5 text-[#f1d37e]/55 animate-pulse pointer-events-none"
-        >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-7 left-10 w-3.5 h-3.5 text-[#f1d37e]/55 animate-pulse pointer-events-none">
           <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
         </svg>
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-6 right-10 w-4 h-4 text-[#fdfbf7]/60 animate-pulse pointer-events-none"
-        >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-6 right-10 w-4 h-4 text-[#fdfbf7]/60 animate-pulse pointer-events-none">
           <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
         </svg>
 
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="absolute top-14 left-6 w-3.5 h-3.5 text-[#f4a896]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(244,168,150,0.7)]"
-        >
+        <svg viewBox="0 0 24 24" fill="currentColor" className="absolute top-14 left-6 w-3.5 h-3.5 text-[#f4a896]/55 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(244,168,150,0.7)]">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         </svg>
 
-        <svg
-          viewBox="0 0 24 28"
-          fill="currentColor"
-          className="absolute top-14 right-7 w-3 h-4 text-[#f1d37e]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(241,211,126,0.6)]"
-        >
+        <svg viewBox="0 0 24 28" fill="currentColor" className="absolute top-14 right-7 w-3 h-4 text-[#f1d37e]/50 animate-pulse pointer-events-none drop-shadow-[0_0_8px_rgba(241,211,126,0.6)]">
           <path d="M12 26C11 23 2 15 2 8a6 6 0 0 1 10-4.5A6 6 0 0 1 22 8c0 7-9 15-10 18z" />
         </svg>
 
@@ -353,11 +338,11 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           The Engagement Celebration Of
         </span>
 
-        {/* Couple Names: Single Line Proportioned (Boosted for Mobile Presence) */}
+        {/* Couple Names: Single Line with Differentiated Initial Glyphs */}
         <div className="py-1 px-2 my-1 flex flex-col items-center space-y-2 overflow-visible w-full max-w-full">
-          {/* Groom Single Line */}
+          {/* Groom Section */}
           <div className="flex flex-col items-center w-full">
-            <h1 className="text-[27px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
+            <h1 className="text-[28px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
               Ibrahim Pasha J
             </h1>
             <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
@@ -365,11 +350,11 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
             </span>
           </div>
 
-          <span className="text-lg sm:text-xl font-script text-[#f1d37e] opacity-80 my-0.5">&</span>
+          <span className="text-lg sm:text-xl font-script text-[#f1d37e] opacity-80 my-0.5">&amp;</span>
 
-          {/* Bride Single Line */}
+          {/* Bride Section */}
           <div className="flex flex-col items-center w-full">
-            <h1 className="text-[27px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
+            <h1 className="text-[28px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
               Jaweriya Mohammadi
             </h1>
             <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
@@ -405,9 +390,9 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
   );
 };
 
-// --- COUNTDOWN COMPONENT ---
+// --- COUNTDOWN COMPONENT (1:00 PM TARGET) ---
 const Countdown = () => {
-  const targetDate = useRef(new Date("2026-11-15T14:00:00").getTime());
+  const targetDate = useRef(new Date("2026-11-15T13:00:00").getTime());
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -464,11 +449,11 @@ const Countdown = () => {
   );
 };
 
-// --- EVENT DETAILS COMPONENT ---
+// --- EVENT DETAILS COMPONENT (1:00 PM ONWARDS) ---
 const EventDetails = () => {
   const eventInfo = {
     date: "Sunday, November 15th 2026",
-    time: "2:00 PM Onwards",
+    time: "1:00 PM Onwards",
     venue: "S.S.N Function Hall",
     address: "Kolar, Karnataka",
     googleMapsUrl: "https://maps.app.goo.gl/BynRj2A2QtQmZyYe6",
@@ -497,7 +482,7 @@ const EventDetails = () => {
 
         <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
           <a
-            href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Engagement+Ceremony:+Ibrahim+Pasha+J+%26+Jaweriya+Mohammadi&dates=20261115T083000Z/20261115T123000Z&details=Engagement+Ceremony&location=${encodeURIComponent(
+            href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Engagement+Ceremony:+Ibrahim+Pasha+J+%26+Jaweriya+Mohammadi&dates=20261115T073000Z/20261115T113000Z&details=Engagement+Ceremony&location=${encodeURIComponent(
               eventInfo.venue + ", " + eventInfo.address
             )}`}
             target="_blank"
@@ -612,7 +597,7 @@ const RSVPSection = () => {
           <span className="text-[#b89851] font-serif-sub text-xs tracking-[0.25em] uppercase">
             Kindly Respond
           </span>
-          <h3 className="text-2xl sm:text-3xl font-script text-[#f1d37e] mt-1 tracking-wider">
+          <h3 className="text-2xl sm:text-3xl font-serif-header text-[#f1d37e] mt-1 tracking-wider">
             RSVP & Send Your Duas
           </h3>
           <p className="text-xs font-sans-body text-gray-300 mt-1">
@@ -848,11 +833,7 @@ export default function App() {
 
           {/* Top Crescent & Star SVG Header */}
           <div className="w-9 h-9 mb-3 text-[#f1d37e] flex items-center justify-center">
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_0_10px_rgba(241,211,126,0.6)]"
-            >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_0_10px_rgba(241,211,126,0.6)]">
               <path d="M12 2a10 10 0 1 0 10 10 1 1 0 0 1-10-10zm2 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm4 3a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
             </svg>
           </div>
@@ -875,7 +856,7 @@ export default function App() {
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#b89851]/60"></div>
           </div>
 
-          {/* Bride & Groom Couple Names with Exact Copperplate Font & Proportioned Single-Line Layout */}
+          {/* Bride & Groom Couple Names */}
           <div className="relative my-2 space-y-3 w-full overflow-visible">
             {/* Rose Gold Slender Accent Heart */}
             <div className="absolute -top-3 right-8 pointer-events-none opacity-80 animate-pulse">
@@ -950,10 +931,10 @@ export default function App() {
             <div className="w-10 h-[1px] bg-[#b89851]/60"></div>
           </div>
 
-          {/* Dynamic Real-Time Countdown */}
+          {/* Dynamic Real-Time Countdown (1:00 PM) */}
           <Countdown />
 
-          {/* Venue & Event Schedule Details Component */}
+          {/* Venue & Event Schedule Details Component (1:00 PM) */}
           <EventDetails />
 
           {/* Private RSVP & Duas Form Component */}
@@ -962,7 +943,7 @@ export default function App() {
           {/* Footer */}
           <footer className="text-center text-[10px] text-[#b89851]/70 pt-6 pb-6 tracking-[0.25em] font-serif-sub uppercase space-y-1">
             <p>May Allah SWT Bless This Union</p>
-            <p className="text-[#f1d37e]">Ibrahim Pasha J & Jaweriya Mohammadi • 2026</p>
+            <p className="text-[#f1d37e]">Ibrahim Pasha J &amp; Jaweriya Mohammadi • 2026</p>
           </footer>
         </div>
       </section>
