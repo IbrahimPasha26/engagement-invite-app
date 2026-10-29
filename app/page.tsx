@@ -6,7 +6,7 @@ import FloatingLanterns from "@/components/FloatingLanterns";
 // --- INLINE STYLES & FONTS INJECTOR ---
 const FontAndStyleInjector = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Pinyon+Script&family=Amiri:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Pinyon+Script&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap');
 
     .font-script {
       font-family: 'Great Vibes', 'Pinyon Script', cursive;
@@ -16,6 +16,7 @@ const FontAndStyleInjector = () => (
 
     .font-serif-header { font-family: 'Cinzel Decorative', 'Cinzel', serif; }
     .font-serif-sub { font-family: 'Cinzel', serif; }
+    .font-formal-italic { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
     .font-arabic { font-family: 'Amiri', serif; }
     .font-sans-body { font-family: 'Montserrat', sans-serif; }
 
@@ -330,23 +331,29 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
           <path d="M12 26C11 23 2 15 2 8a6 6 0 0 1 10-4.5A6 6 0 0 1 22 8c0 7-9 15-10 18z" />
         </svg>
 
-        <p className="text-[#f1d37e] font-arabic text-xl sm:text-2xl tracking-widest mb-2.5">
+        <p className="text-[#f1d37e] font-arabic text-xl sm:text-2xl tracking-widest mb-2">
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
         </p>
 
-        <span className="text-[#b89851] font-serif-sub text-[10px] sm:text-xs uppercase tracking-[0.3em] mb-4">
-          The Engagement Celebration Of
+        {/* Formal Blessing Header */}
+        <span className="text-[#f1d37e] font-serif-sub text-[10px] sm:text-xs uppercase tracking-[0.28em] font-semibold mb-1">
+          With the blessings of Allah SWT
         </span>
 
-        {/* Couple Names: Single Line with Differentiated Initial Glyphs */}
-        <div className="py-1 px-2 my-1 flex flex-col items-center space-y-2 overflow-visible w-full max-w-full">
+        {/* Formal Invitation Prose */}
+        <p className="text-[#f1d37e]/90 font-formal-italic text-sm sm:text-base leading-snug max-w-sm mx-auto mb-4 tracking-wide">
+          Mr. & Mrs. Javeed Pasha cordially invite you to the engagement ceremony of their beloved son
+        </p>
+
+        {/* Couple Names With Streamlined S/o & D/o Lineage */}
+        <div className="py-1 px-2 my-1 flex flex-col items-center space-y-2.5 overflow-visible w-full max-w-full">
           {/* Groom Section */}
           <div className="flex flex-col items-center w-full">
             <h1 className="text-[28px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
               Ibrahim Pasha J
             </h1>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
-              Software Engineer
+            <span className="font-serif-sub text-[10px] sm:text-[11px] text-[#f1d37e] tracking-[0.18em] uppercase font-semibold mt-1">
+              S/o Mr. Javeed Pasha
             </span>
           </div>
 
@@ -357,13 +364,13 @@ const StardustEntry = ({ onOpen }: { onOpen: () => void }) => {
             <h1 className="text-[28px] sm:text-[34px] md:text-[42px] font-script gold-shimmer drop-shadow-md whitespace-nowrap tracking-normal leading-tight inline-block px-2">
               Jaweriya Mohammadi
             </h1>
-            <span className="text-[9px] sm:text-[10px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
-              Data Analyst
+            <span className="font-serif-sub text-[10px] sm:text-[11px] text-[#f1d37e] tracking-[0.18em] uppercase font-semibold mt-1">
+              D/o Mr. Rafeeq Ahmed
             </span>
           </div>
         </div>
 
-        <p className="text-gray-300 font-serif-sub text-[10px] sm:text-xs tracking-[0.25em] uppercase mt-4 mb-7 opacity-80">
+        <p className="text-[#b89851] font-serif-sub text-[10px] sm:text-xs tracking-[0.25em] uppercase mt-4 mb-7 font-medium">
           Save The Date • November 15, 2026
         </p>
 
@@ -449,10 +456,10 @@ const Countdown = () => {
   );
 };
 
-// --- EVENT DETAILS COMPONENT (1:00 PM ONWARDS) ---
+// --- EVENT DETAILS COMPONENT ---
 const EventDetails = () => {
   const eventInfo = {
-    date: "Sunday, November 15th 2026",
+    date: "Sunday, November 15, 2026",
     time: "1:00 PM Onwards",
     venue: "S.S.N Function Hall",
     address: "Kolar, Karnataka",
@@ -461,7 +468,17 @@ const EventDetails = () => {
 
   return (
     <div className="w-full space-y-6 my-6">
-      {/* Date & Time Section */}
+
+      {/* Narrative Block 1: Honor of Presence (Before "When") */}
+      <div className="scroll-glass-card relative p-5 sm:p-6 rounded-3xl bg-[#082018]/40 border border-[#b89851]/20 backdrop-blur-md text-center max-w-md mx-auto">
+        <CornerOrnament className="absolute top-2 left-2 w-7 h-7 sm:w-8 sm:h-8 opacity-70" />
+        <CornerOrnament className="absolute bottom-2 right-2 w-7 h-7 sm:w-8 sm:h-8 opacity-70 transform rotate-180" />
+        <p className="font-formal-italic text-sm sm:text-base text-[#f1d37e]/95 leading-relaxed tracking-wide">
+          &ldquo;We request the honor of your presence and heartfelt blessings as they begin this beautiful journey together.&rdquo;
+        </p>
+      </div>
+
+      {/* Date & Time Section ("When") */}
       <div className="scroll-glass-card relative p-6 sm:p-8 rounded-3xl bg-[#082018]/45 border border-[#b89851]/25 backdrop-blur-md text-center">
         <CornerOrnament className="absolute top-2 left-2" />
         <CornerOrnament className="absolute top-2 right-2 transform rotate-90" />
@@ -494,8 +511,13 @@ const EventDetails = () => {
         </div>
       </div>
 
-      {/* Venue Section with Direct Navigate Action */}
+      {/* Venue Section ("Where") */}
       <div className="scroll-glass-card relative p-6 sm:p-8 rounded-3xl bg-[#082018]/45 border border-[#b89851]/25 backdrop-blur-md text-center">
+        <CornerOrnament className="absolute top-2 left-2" />
+        <CornerOrnament className="absolute top-2 right-2 transform rotate-90" />
+        <CornerOrnament className="absolute bottom-2 left-2 transform -rotate-90" />
+        <CornerOrnament className="absolute bottom-2 right-2 transform rotate-180" />
+
         <div className="flex justify-center items-center gap-2 text-[#f1d37e] mb-2">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -525,6 +547,16 @@ const EventDetails = () => {
           </a>
         </div>
       </div>
+
+      {/* Narrative Block 2: Blessing & Warmth (After "Where") */}
+      <div className="scroll-glass-card relative p-5 sm:p-6 rounded-3xl bg-[#082018]/40 border border-[#b89851]/20 backdrop-blur-md text-center max-w-md mx-auto">
+        <CornerOrnament className="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 opacity-70 transform rotate-90" />
+        <CornerOrnament className="absolute bottom-2 left-2 w-7 h-7 sm:w-8 sm:h-8 opacity-70 transform -rotate-90" />
+        <p className="font-formal-italic text-sm sm:text-base text-[#f1d37e]/95 leading-relaxed tracking-wide">
+          &ldquo;Your presence and blessings will make our special day truly memorable.&rdquo;
+        </p>
+      </div>
+
     </div>
   );
 };
@@ -597,7 +629,7 @@ const RSVPSection = () => {
           <span className="text-[#b89851] font-serif-sub text-xs tracking-[0.25em] uppercase">
             Kindly Respond
           </span>
-          <h3 className="text-2xl sm:text-3xl font-serif-header text-[#f1d37e] mt-1 tracking-wider">
+          <h3 className="text-3xl sm:text-4xl font-script text-[#f1d37e] mt-1 tracking-wider gold-shimmer">
             RSVP & Send Your Duas
           </h3>
           <p className="text-xs font-sans-body text-gray-300 mt-1">
@@ -843,9 +875,14 @@ export default function App() {
             بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
           </p>
 
-          <span className="text-[#b89851] font-serif-sub text-[9px] sm:text-xs tracking-[0.3em] uppercase mb-5">
-            With the blessings of Allah SWT & Our Families
+          {/* Formal Blessing & Host Invitation */}
+          <span className="text-[#f1d37e] font-serif-sub text-[10px] sm:text-xs tracking-[0.3em] uppercase font-semibold mb-1">
+            With the blessings of Allah SWT
           </span>
+
+          <p className="text-[#f1d37e]/90 font-formal-italic text-sm sm:text-base leading-snug max-w-sm mx-auto mb-5 tracking-wide">
+            Mr. & Mrs. Javeed Pasha cordially invite you to the engagement ceremony of their beloved son
+          </p>
 
           {/* Ceremony Badge Title Header */}
           <div className="flex items-center justify-center space-x-3 mb-5 w-full">
@@ -856,8 +893,8 @@ export default function App() {
             <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-[#b89851]/60"></div>
           </div>
 
-          {/* Bride & Groom Couple Names */}
-          <div className="relative my-2 space-y-3 w-full overflow-visible">
+          {/* Bride & Groom Couple Names with Streamlined S/o & D/o Lineage */}
+          <div className="relative my-2 space-y-3.5 w-full overflow-visible">
             {/* Rose Gold Slender Accent Heart */}
             <div className="absolute -top-3 right-8 pointer-events-none opacity-80 animate-pulse">
               <svg viewBox="0 0 24 28" fill="currentColor" className="w-3.5 h-5 text-[#f4a896] drop-shadow-[0_0_8px_rgba(244,168,150,0.85)]">
@@ -876,8 +913,8 @@ export default function App() {
               <h1 className="text-[30px] sm:text-[38px] md:text-[46px] font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
                 Ibrahim Pasha J
               </h1>
-              <span className="text-[9px] sm:text-[11px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
-                Software Engineer
+              <span className="font-serif-sub text-[11px] sm:text-xs text-[#f1d37e] tracking-[0.18em] uppercase font-semibold mt-1">
+                S/o Mr. Javeed Pasha
               </span>
             </div>
 
@@ -901,24 +938,25 @@ export default function App() {
               <h1 className="text-[30px] sm:text-[38px] md:text-[46px] font-script gold-shimmer drop-shadow-[0_0_20px_rgba(212,175,55,0.4)] whitespace-nowrap leading-tight inline-block px-2">
                 Jaweriya Mohammadi
               </h1>
-              <span className="text-[9px] sm:text-[11px] tracking-[0.3em] font-serif-sub text-[#b89851] uppercase font-semibold mt-1">
-                Data Analyst
+              <span className="font-serif-sub text-[11px] sm:text-xs text-[#f1d37e] tracking-[0.18em] uppercase font-semibold mt-1">
+                D/o Mr. Rafeeq Ahmed
               </span>
             </div>
           </div>
 
-          {/* Quranic Verse Framing (Surah Ar-Rum: 30:21) */}
-          <div className="scroll-glass-card relative w-full bg-[#082018]/45 border border-[#b89851]/25 rounded-3xl p-5 sm:p-7 my-6 backdrop-blur-md text-center">
+          {/* Polished English-Only Quranic Verse Framing (Surah Ar-Rum: 30:21) */}
+          <div className="scroll-glass-card relative w-full bg-[#082018]/50 border border-[#b89851]/30 rounded-3xl p-6 sm:p-8 my-6 backdrop-blur-md text-center">
             <CornerOrnament className="absolute top-2 left-2" />
             <CornerOrnament className="absolute bottom-2 right-2 transform rotate-180" />
 
-            <p className="text-gray-200 font-serif-sub text-xs sm:text-sm italic leading-relaxed">
-              &ldquo;And among His signs is that He created for you mates from
-              among yourselves, that you may find tranquility in them; and He
-              placed between you affection and mercy.&rdquo;
+            <p className="text-[#f6df95] font-formal-italic text-base sm:text-lg leading-relaxed tracking-wide max-w-md mx-auto drop-shadow-sm">
+              &ldquo;And among His signs is that He created for you mates from among yourselves, that you may find tranquility in them; and He placed between you affection and mercy.&rdquo;
             </p>
-            <span className="block mt-3 text-[#b89851] font-serif-sub text-[9px] sm:text-[10px] tracking-[0.25em] uppercase font-bold">
-              — Surah Ar-Rum [30:21]
+
+            <div className="w-12 h-[1px] bg-[#b89851]/40 mx-auto my-3"></div>
+
+            <span className="block text-[#b89851] font-serif-sub text-[10px] sm:text-[11px] tracking-[0.25em] uppercase font-semibold">
+              — Surah Ar-Rum [30:21] —
             </span>
           </div>
 
@@ -934,16 +972,28 @@ export default function App() {
           {/* Dynamic Real-Time Countdown (1:00 PM) */}
           <Countdown />
 
-          {/* Venue & Event Schedule Details Component (1:00 PM) */}
+          {/* Venue & Event Schedule Details Component with Narrative Blocks */}
           <EventDetails />
 
           {/* Private RSVP & Duas Form Component */}
           <RSVPSection />
 
-          {/* Footer */}
-          <footer className="text-center text-[10px] text-[#b89851]/70 pt-6 pb-6 tracking-[0.25em] font-serif-sub uppercase space-y-1">
-            <p>May Allah SWT Bless This Union</p>
-            <p className="text-[#f1d37e]">Ibrahim Pasha J &amp; Jaweriya Mohammadi • 2026</p>
+          {/* Formal Family Closing Signature & Footer */}
+          <footer className="text-center pt-8 pb-8 tracking-wider space-y-2">
+            <p className="text-sm sm:text-base text-[#f1d37e]/90 font-formal-italic tracking-wide">
+              With love & warm regards,
+            </p>
+            <h4 className="text-sm sm:text-base font-semibold font-serif-sub gold-shimmer tracking-[0.2em] uppercase">
+              Mr. & Mrs. Javeed Pasha & Family
+            </h4>
+            <div className="flex items-center justify-center gap-3 my-3">
+              <div className="w-12 h-[1px] bg-[#b89851]/40"></div>
+              <span className="text-[#f1d37e] text-xs">✦</span>
+              <div className="w-12 h-[1px] bg-[#b89851]/40"></div>
+            </div>
+            <p className="text-[10px] text-[#b89851]/70 font-serif-sub uppercase tracking-[0.25em]">
+              May Allah SWT Bless This Union • 2026
+            </p>
           </footer>
         </div>
       </section>
